@@ -21,5 +21,5 @@ const knexInstance = knex(config);
 
 module.exports = {
     ...config,
-    knexInstance: knexInstance
+    knexInstance: knexInstance,
 };

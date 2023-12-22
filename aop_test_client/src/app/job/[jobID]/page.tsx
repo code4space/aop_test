@@ -33,9 +33,6 @@ export default function Page({ params }: paramScheme) {
         return result;
     }
 
-    console.log(jobs);
-
-
     if (loading) return <LoadingUI />
     if (!jobs.id) return (
         <div className='pt-5 px-10'>

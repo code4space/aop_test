@@ -10,6 +10,7 @@ function* fetchJobsSaga(action: { type: string, payload: FetchJobsPayload }): Ge
         let queryString = '';
         if (action.payload) {
             queryString = Object.entries(action.payload)
+                .filter(([key, value]) => value !== undefined && value !== null && value !== '')
                 .map(([key, value]) => {
                     key = encodeURIComponent(key === 'fulltime' ? 'full-time' : key);
                     value = encodeURIComponent(value?.toString() ?? '');
@@ -18,7 +19,6 @@ function* fetchJobsSaga(action: { type: string, payload: FetchJobsPayload }): Ge
                 .join('&');
         }
 
-        console.log(queryString);
         const response = yield call(() => {
             return axios({
                 url: `${BASE_URL}/jobs?${queryString}`,

@@ -12,15 +12,18 @@ class JobService {
             const query = this.Job.query();
 
             if (description) {
-                query.orWhere('title', 'ilike', `%${description}%`)
-                    .orWhere('description', 'ilike', `%${description}%`)
+                query.andWhere(function () {
+                    this.where('title', 'ilike', `%${description}%`)
+                        .orWhere('description', 'ilike', `%${description}%`);
+                });
             }
 
             if (location) {
-                query.where('location', 'ilike', `%${location}%`);
+                query.andWhere('location', 'ilike', `%${location}%`);
             }
-            if (fullTime) {
-                query.where('type', 'full-time');
+
+            if (fullTime === 'true') {
+                query.andWhere('type', 'full-time');
             }
 
             const totalCount = await query.resultSize();
